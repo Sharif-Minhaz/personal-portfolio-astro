@@ -1,51 +1,245 @@
 ---
+import Navbar from "../components/Navbar";
+import "bootstrap/dist/css/bootstrap.min.css";
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min.js?url";
+import ColorChanger from "../components/ColorChanger";
+import { Toaster } from "sonner";
+
 interface Props {
 	title: string;
+	description: string;
+	image: string;
 }
 
-const { title } = Astro.props;
+const { title, description, image } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
+		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" href="/faviconIcon.png" />
 		<meta name="generator" content={Astro.generator} />
+		<meta property="og:image" content={image} />
 		<title>{title}</title>
 	</head>
 	<body>
+		<Navbar client:load />
 		<slot />
+		<ColorChanger client:load />
+		<Toaster />
+		<script is:inline src={bootstrap}></script>
 	</body>
 </html>
+
 <style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: Arial, Helvetica, sans-serif;
 	}
+
+	html body {
+		--nav-link: #292929e6;
+		--change-color: #33ddff;
+		--focus-color: rgb(0, 172, 238);
+		--low-color: rgba(51, 221, 255, 0.1);
+		--indicators: #00ffff2d;
+		--hover-indicators: #1a4b59;
+		--aside-color: #f8fcfe;
+		--sectionL-bg: #f3f3f3;
+		--sectionD-bg: #eaeaea;
+		--sectionL-heading: #e4e4e4;
+		--sectionD-heading: #dcdcdc;
+		--silver-color: #505050;
+		--box-icon: #ffffff;
+		--extra-light: rgb(19 19 19 / 70%);
+		--heading-color: #343a39;
+		--normal-color: #4a4a4a;
+		--normal-lColor: 3c3c3ccc;
+		--messages-box-bg: #ffffff;
+		--footer-bg: #ffffff;
+		--light-border: rgb(0 0 0 / 10%);
+		--card-bg: #f8fcfe;
+	}
+
+	html body.dark {
+		--nav-link: #ffffffe6;
+		--aside-color: #111419;
+		--sectionL-bg: #343a40;
+		--sectionD-bg: #212528;
+		--sectionL-heading: #394045;
+		--sectionD-heading: #282d30;
+		--heading-color: #ffffff;
+		--silver-color: #9a9da0;
+		--extra-light: rgba(255, 255, 255, 0.7);
+		--box-icon: #343a40;
+		--normal-color: #ffffff;
+		--normal-lColor: rgba(255, 255, 255, 0.7);
+		--messages-box-bg: #212528;
+		--footer-bg: #212528;
+		--light-border: rgba(255, 255, 255, 0.1);
+		--card-bg: #343a40;
+	}
+
+	::selection {
+		background-color: var(--change-color);
+		color: white;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	a:focus {
+		border: none;
+		outline: none;
+		color: var(--focus-color) !important;
+	}
+
+	/* -----------------scrollbar------------------ */
+	/* width */
+	::-webkit-scrollbar {
+		width: 11px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		box-shadow: inset 0 0 5px rgb(104, 102, 102);
+		height: 10px;
+		border-radius: 10px;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #a8a8a8;
+		border-radius: 10px;
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #575656;
+	}
+
 	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
+		overflow-x: hidden;
+		scroll-behavior: smooth;
+		scroll-padding-top: 0px;
 	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
+
+	html:focus-within {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		width: 100%;
+		position: relative;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+
+	a .bottom-to-top {
+		position: fixed;
+		height: 40px;
+		width: 40px;
+		background-color: rgb(34, 34, 34);
+		bottom: 10px;
+		right: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		transition: all 0.3s;
+		z-index: 10000;
+	}
+
+	a .bottom-to-top svg {
+		color: rgb(238, 238, 238);
+	}
+
+	a .bottom-to-top:hover {
+		background-color: var(--change-color);
+	}
+
+	.inline-block {
+		display: inline-block;
+	}
+
+	.mr-2 {
+		margin-right: 8px;
+	}
+
+	.ml-2 {
+		margin-left: 8px;
+	}
+
+	.mt-2 {
+		margin-top: 8px;
+	}
+
+	.mb-2 {
+		margin-bottom: 8px;
+	}
+
+	.mx-2 {
+		margin-inline: 8px;
+	}
+
+	.my-2 {
+		margin-block: 8px;
+	}
+
+	.line-clamp-2 {
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+	}
+
+	/* -------------------colors-------------------- */
+	#colors {
+		position: fixed;
+		display: flex;
+		height: 219px;
+		right: 0;
+		bottom: 50%;
+		z-index: 9999;
+		transform: translate(0, 50%);
+		transition: right 0.5s;
+	}
+
+	#colors.go-in {
+		right: 0px !important;
+	}
+
+	#colors .icon button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		color: var(--nav-link);
+		width: 39px;
+		height: 42px;
+		background-color: var(--aside-color);
+		border-top-left-radius: 4px;
+		border-bottom-left-radius: 4px;
+		border: 1px solid var(--light-border);
+		border-right: none;
+	}
+
+	#colors .icon button svg {
+		font-size: 23px;
+	}
+
+	/* active scroll spy styles */
+	.active-link {
+		color: var(--change-color) !important;
+	}
+
+	.black-gradient {
+		background: #000000;
+		background: linear-gradient(to right, #434343, #000000);
 	}
 </style>
