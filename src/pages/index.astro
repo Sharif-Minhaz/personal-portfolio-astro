@@ -1174,6 +1174,26 @@ import Reviews from "../components/Reviews";
 		color: var(--change-color);
 	}
 
+	.tech-des {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		justify-content: center;
+		color: var(--silver-color);
+		border-top: 1px solid rgb(213, 213, 213);
+		padding-top: 20px;
+		margin-top: 25px;
+	}
+
+	.dark .tech-des {
+		border-top: 1px solid rgb(61, 61, 61);
+	}
+
+	.tech-des img {
+		width: 25px;
+		height: 25px;
+	}
+
 	.footer-name {
 		color: var(--change-color);
 	}
@@ -1386,13 +1406,13 @@ import Reviews from "../components/Reviews";
 			margin-top: 25px;
 		}
 
+		footer .row .col-12 {
+			text-align: center !important;
+		}
+
 		footer .row .col-12:first-child {
 			text-align: center;
 			margin-bottom: 10px;
-		}
-
-		footer .row .col-12:last-child {
-			text-align: center !important;
 		}
 	}
 
